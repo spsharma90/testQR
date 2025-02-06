@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Popup Trigger Page</title>
+    <style>
+        /* Style for the popup */
+        #popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            border-radius: 10px;
+        }
+
+        #popup button {
+            padding: 10px 20px;
+            background-color: red;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <button onclick="openPopup()">Open Popup</button>
+
+    <div id="popup">
+        <p>This is a popup triggered by a button!</p>
+        <button onclick="closePopup()">Close</button>
+    </div>
+
+    <script>
+        // Open the popup when triggered
+        function openPopup() {
+            document.getElementById('popup').style.display = 'block';
+        }
+
+        // Close the popup when the close button is clicked
+        function closePopup() {
+            document.getElementById('popup').style.display = 'none';
+        }
+
+        // Check if the page is opened from a QR scan
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has('openPopup') && urlParams.get('openPopup') === 'true') {
+                openPopup();  // Open the popup automatically
+            }
+        };
+    </script>
+
+</body>
+</html>
