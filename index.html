@@ -164,12 +164,14 @@
 
     // Make sure to use an absolute URL that works when deployed on GitHub Pages
     const displayPageUrl = `${window.location.origin}${window.location.pathname}/display.html?data=${qrData}`;
-
+	console.log(displayPageUrl)
     const qr = new QRious({
         element: document.getElementById('qrcode'),
         value: displayPageUrl,
         size: 250
     });
+	
+	console.log(qr)
 }
 
     </script>
