@@ -153,23 +153,25 @@
         });
 
         function generateQRCode(name, stream, phone, address, college, imageUrl) {
-            const qrData = encodeURIComponent(JSON.stringify({
-                name,
-                stream,
-                phone,
-                address,
-                college,
-                imageUrl
-            }));
+    const qrData = encodeURIComponent(JSON.stringify({
+        name,
+        stream,
+        phone,
+        address,
+        college,
+        imageUrl
+    }));
 
-            const displayPageUrl = `${window.location.origin}/display.html?data=${qrData}`;
+    // Make sure to use an absolute URL that works when deployed on GitHub Pages
+    const displayPageUrl = `${window.location.origin}${window.location.pathname}/display.html?data=${qrData}`;
 
-            const qr = new QRious({
-                element: document.getElementById('qrcode'),
-                value: displayPageUrl,
-                size: 250
-            });
-        }
+    const qr = new QRious({
+        element: document.getElementById('qrcode'),
+        value: displayPageUrl,
+        size: 250
+    });
+}
+
     </script>
 
 </body>
