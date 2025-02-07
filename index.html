@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enrollment Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            display: flex;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 800px;
+        }
+        .form-section {
+            width: 50%;
+            padding-right: 20px;
+        }
+        .qr-section {
+            width: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .form-group input, 
+        .form-group select, 
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .form-group input[type="file"] {
+            padding: 3px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="form-section">
+            <h2>Enrollment Form</h2>
+            <form id="enrollmentForm">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="stream">Stream</label>
+                    <select id="stream" name="stream" required>
+						<option selected disabled>Course Stream</option>
+                        <option value="Computer Science">Computer Science</option>
+                        <option value="Information Technology">Information Technology</option>
+                        <option value="Electronics and Communication">Electronics and Communication</option>
+                        <option value="Mechanical Engineering">Mechanical Engineering</option>
+                        <option value="Master of Computer Application">Master of Computer Application</option>
+                        <option value="Electrical Engineering">Electrical Engineering</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="address">Address</label>
+                    <textarea id="address" name="address" rows="3" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="college">College</label>
+                    <select id="college" name="college" required>
+						<option selected disabled>Choose educational institute</option>
+                        <option value="Punjabi University, Patiala">Punjabi University, Patiala</option>
+                        <option value="Panjab University, Chandigarh">Panjab University, Chandigarh</option>
+                        <option value="Lovely Professional University, Jalandhar">Lovely Professional University, Jalandhar</option>
+                        <option value="Thapar Institute, Patiala">Thapar Institute, Patiala</option>
+                        <option value="Guru Nanak Dev University, Amritsar">Guru Nanak Dev University, Amritsar</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="image">Upload Image</label>
+                    <input type="file" id="image" name="image" accept="image/*">
+                </div>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+        <div class="qr-section">
+            <canvas id="qrcode"></canvas>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+    <script>
+        document.getElementById('enrollmentForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const stream = document.getElementById('stream').value;
+            const phone = document.getElementById('phone').value;
+            const address = document.getElementById('address').value;
+            const college = document.getElementById('college').value;
+            const imageFile = document.getElementById('image').files[0];
+
+            let imageUrl = '';
+            if (imageFile) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    imageUrl = event.target.result;
+                    generateQRCode(name, stream, phone, address, college, imageUrl);
+                };
+                reader.readAsDataURL(imageFile);
+            } else {
+                generateQRCode(name, stream, phone, address, college, imageUrl);
+            }
+
+            // Clear the form
+            document.getElementById('enrollmentForm').reset();
+        });
+
+        function generateQRCode(name, stream, phone, address, college, imageUrl) {
+            const qrData = encodeURIComponent(JSON.stringify({
+                name,
+                stream,
+                phone,
+                address,
+                college,
+                imageUrl
+            }));
+
+            const displayPageUrl = `${window.location.origin}/display.html?data=${qrData}`;
+
+            const qr = new QRious({
+                element: document.getElementById('qrcode'),
+                value: displayPageUrl,
+                size: 250
+            });
+        }
+    </script>
+
+</body>
+</html>
+
+
+
+                   
