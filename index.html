@@ -152,27 +152,31 @@
             document.getElementById('enrollmentForm').reset();
         });
 
-        function generateQRCode(name, stream, phone, address, college, imageUrl) {
+      function generateQRCode(name, stream, phone, address, college, imageUrl) {
     const qrData = encodeURIComponent(JSON.stringify({
         name,
         stream,
         phone,
         address,
         college,
-        imageUrl
+        //imageUrl
     }));
 
-    // Make sure to use an absolute URL that works when deployed on GitHub Pages
-    const displayPageUrl = `${window.location.origin}${window.location.pathname}/display.html?data=${qrData}`;
-	console.log(displayPageUrl)
+    // Get the base URL of the current page (without index.html)
+    const baseUrl = window.location.origin + window.location.pathname.replace('index.html', '');
+
+    // Generate the correct URL for display.html
+    const displayPageUrl = `${baseUrl}display.html?data=${qrData}`;
+    
+    console.log(displayPageUrl); // This will print the correct URL
+
     const qr = new QRious({
         element: document.getElementById('qrcode'),
         value: displayPageUrl,
         size: 250
     });
-	
-	console.log(qr)
 }
+
 
     </script>
 
